@@ -11,7 +11,6 @@ main(int argc, char *argv[])
   }
 
   int t = atoi(argv[1]);
-  printf("%d\n", t);
   sleep(t);
   exit(0);
 }
