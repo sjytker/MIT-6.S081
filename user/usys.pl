@@ -36,3 +36,7 @@ entry("getpid");
 entry("sbrk");
 entry("sleep");
 entry("uptime");
+entry("trace");
+
+
+# SYS_xxx calls xxx. Say, SYS_exec() calls exec()

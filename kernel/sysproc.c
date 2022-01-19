@@ -6,6 +6,16 @@
 #include "memlayout.h"
 #include "spinlock.h"
 #include "proc.h"
+#include "syscall.h"
+
+void
+print_trace(struct proc *p, char *call_name, int call_num, int retval) {
+  int trace_mask = p->trace_mask;
+  int pid = p->pid;
+  if ((trace_mask & call_num) == call_num) {
+    printf("%d: syscall %s -> %d\n", pid, call_name, retval);
+  }
+}
 
 uint64
 sys_exit(void)
@@ -94,4 +104,15 @@ sys_uptime(void)
   xticks = ticks;
   release(&tickslock);
   return xticks;
+}
+
+uint64
+sys_trace(void)
+{
+  int n;
+  if (argint(0, &n) < 0) 
+    return -1;
+  myproc()->trace_mask = n;
+  printf("sys_trace set mask complete : %d\n", n);
+  return 0;
 }
